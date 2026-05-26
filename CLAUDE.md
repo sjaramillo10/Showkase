@@ -103,3 +103,4 @@ This classpath-scanning step is the central design constraint when planning the 
 - Close issues via `Closes #<n>` in the PR body.
 - The PR body should match the template; surface anything that drifted from the issue scope under "Out-of-scope follow-ups" instead of expanding the PR.
 - When an issue body specifies dependency versions, treat them as "verify at PR time against current releases" — the plan was written ahead of execution and version landscape may have shifted.
+- **Do not enable auto-merge** (`gh pr merge --auto`) on PRs by default. The user reviews PRs manually and enables auto-merge themselves when ready. Only invoke `gh pr merge --auto` when the user explicitly asks for it on a specific PR.
