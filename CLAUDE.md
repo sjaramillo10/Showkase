@@ -12,7 +12,7 @@ This is a personal fork of Airbnb's [Showkase](https://github.com/airbnb/Showkas
 
 ## Log key decisions
 
-[docs/KeyDecisions.md](docs/KeyDecisions.md) is the running record of non-obvious decisions made during the migration — what was chosen, why, and any follow-up implications. Add an entry when picking between viable alternatives, deviating from a documented plan, introducing a workaround, or resolving an ambiguity a future reader might revisit. Skip mechanical refactors and routine version bumps. The doc lives in this repo so it travels with the code; treat it as part of the deliverable, not optional commentary.
+[docs/KeyDecisions.md](docs/KeyDecisions.md) is the running record of decisions that materially shape kronicle's path to a Compose-Multiplatform release — what we ship, what we drop, what platforms we target, what we depend on. Add an entry when a decision changes the direction or scope of the KMP transition. **Skip** mechanical refactors, quality-of-life improvements (version catalog, KTS conversion, etc.), routine version bumps, CI/workflow tweaks, and anything trivially derivable from `git log`. The doc travels with the code; treat it as part of the deliverable, not optional commentary.
 
 ## Keep this file in sync
 
