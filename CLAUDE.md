@@ -10,6 +10,10 @@ This is a personal fork of Airbnb's [Showkase](https://github.com/airbnb/Showkas
 
 **Commit policy** (from global rules): never add `Co-Authored-By` trailers or Claude/Anthropic attribution.
 
+## Log key decisions
+
+[docs/KeyDecisions.md](docs/KeyDecisions.md) is the running record of non-obvious decisions made during the migration — what was chosen, why, and any follow-up implications. Add an entry when picking between viable alternatives, deviating from a documented plan, introducing a workaround, or resolving an ambiguity a future reader might revisit. Skip mechanical refactors and routine version bumps. The doc lives in this repo so it travels with the code; treat it as part of the deliverable, not optional commentary.
+
 ## Keep this file in sync
 
 At the end of every session, update CLAUDE.md to match the current state of the repo. If a phase landed, drop references to the old state and update the "Build configuration" pins and architectural notes. Examples:
