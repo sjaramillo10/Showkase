@@ -51,7 +51,7 @@ dependencies {
     testImplementation files('libs/rt.jar')
 
     // Support Libraries
-    implementation deps.support.appCompat
+    implementation libs.androidx.appcompat
 
     // Showkase
     implementation project(':showkase')
@@ -59,27 +59,27 @@ dependencies {
     implementation project(':showkase-screenshot-testing')
 
     // KSP
-    implementation deps.ksp
+    implementation libs.ksp.api
 
     // Compose
-    implementation deps.compose.activityCompose
-    implementation deps.compose.composeRuntime
-    implementation deps.compose.core
-    implementation deps.compose.foundation
-    implementation deps.compose.tooling
+    implementation libs.androidx.activity.compose
+    implementation libs.compose.runtime
+    implementation libs.compose.ui
+    implementation libs.compose.foundation
+    implementation libs.compose.ui.tooling
 
     // Material
-    implementation deps.material.material
-    implementation deps.material.mdcComposeThemeAdapter
+    implementation libs.material
+    implementation libs.material.compose.theme.adapter
 
     // Testing
-    testImplementation deps.test.assertJ
-    testImplementation deps.test.googleTruth
-    testImplementation deps.test.junit
-    testImplementation deps.kotlinCompileTesting
-    testImplementation deps.kotlinCompileTestingKsp
+    testImplementation libs.assertj
+    testImplementation libs.google.truth
+    testImplementation libs.junit
+    testImplementation libs.kotlin.compile.testing
+    testImplementation libs.kotlin.compile.testing.ksp
     testImplementation project(':showkase-screenshot-testing-paparazzi')
-    testImplementation deps.test.paparazzi
+    testImplementation libs.paparazzi
 }
 
 // Needed for Java17 otherwise these tests failed to run locally.

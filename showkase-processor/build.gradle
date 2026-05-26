@@ -30,15 +30,15 @@ kotlin {
 dependencies {
     implementation project(':showkase-annotation')
 
-    implementation deps.kotlinPoet
-    implementation deps.kotlinJavaPoetInterop
-    implementation deps.kotlinXMetadata
-    implementation deps.ksp
-    implementation deps.xprocessing
+    implementation libs.kotlinpoet
+    implementation libs.kotlinpoet.javapoet
+    implementation libs.kotlin.metadata.jvm
+    implementation libs.ksp.api
+    implementation libs.room.compiler.processing
 
-    testImplementation deps.test.strikt
-    testImplementation deps.test.junit
-    testImplementation deps.xprocessingTesting
+    testImplementation libs.strikt.core
+    testImplementation libs.junit
+    testImplementation libs.room.compiler.processing.testing
 }
 
 mavenPublishing {

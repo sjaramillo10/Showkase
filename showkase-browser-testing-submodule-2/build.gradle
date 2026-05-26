@@ -65,7 +65,7 @@ kotlin {
 
 dependencies {
     // Support Libraries
-    implementation deps.support.appCompat
+    implementation libs.androidx.appcompat
 
     // Showkase
     implementation project(':showkase')
@@ -78,20 +78,20 @@ dependencies {
     implementation project(':showkase-screenshot-testing')
 
     // Compose
-    implementation deps.compose.activityCompose
-    implementation deps.compose.composeRuntime
-    implementation deps.compose.core
-    implementation deps.compose.foundation
-    implementation deps.compose.tooling
-    androidTestImplementation deps.compose.uiTest
+    implementation libs.androidx.activity.compose
+    implementation libs.compose.runtime
+    implementation libs.compose.ui
+    implementation libs.compose.foundation
+    implementation libs.compose.ui.tooling
+    androidTestImplementation libs.compose.ui.test.junit4
 
     // Material
-    implementation deps.material.material
-    implementation deps.material.mdcComposeThemeAdapter
+    implementation libs.material
+    implementation libs.material.compose.theme.adapter
 
     // Testing
-    androidTestImplementation deps.test.junitImplementation
-    androidTestImplementation deps.test.androidXTestCore
-    androidTestImplementation deps.test.androidXTestRules
-    androidTestImplementation deps.test.androidxTestRunner
+    androidTestImplementation libs.androidx.test.ext.junit
+    androidTestImplementation libs.androidx.test.core
+    androidTestImplementation libs.androidx.test.rules
+    androidTestImplementation libs.androidx.test.runner
 }
