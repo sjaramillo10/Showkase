@@ -2,9 +2,9 @@ import com.vanniktech.maven.publish.JavaLibrary
 import com.vanniktech.maven.publish.JavadocJar
 
 plugins {
-    id 'java-library'
-    id 'kotlin'
-    id 'com.vanniktech.maven.publish'
+    `java-library`
+    id("org.jetbrains.kotlin.jvm")
+    id("com.vanniktech.maven.publish")
 }
 
 kotlin {
@@ -12,5 +12,5 @@ kotlin {
 }
 
 mavenPublishing {
-    configure(new JavaLibrary(new JavadocJar.Javadoc(), true))
+    configure(JavaLibrary(JavadocJar.Javadoc(), true))
 }

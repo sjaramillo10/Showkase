@@ -15,8 +15,6 @@ This is a personal fork of Airbnb's [Showkase](https://github.com/airbnb/Showkas
 At the end of every session, update CLAUDE.md to match the current state of the repo. If a phase landed, drop references to the old state and update the "Build configuration" pins and architectural notes. Examples:
 
 - After Phase 1.1 merges: remove every mention of KAPT, `-PuseKsp=true`, the `useKsp` toggle, and the dual `META-INF/services` registration. The `Codegen` paragraph should describe a KSP-only entry point.
-- After Phase 1.0a merges: remove the "No version catalog yet" line and replace command examples that hard-code dependency coordinates with `libs.*` references.
-- After Phase 1.0b merges: change references from `build.gradle` / Groovy DSL to `build.gradle.kts`.
 - After Phase 1.0c merges: drop the "Maven group is still `com.airbnb.android`" line.
 - After Phase 1.2 merges: update the AGP / Kotlin / KSP / Compose / Gradle version pins. Re-evaluate the `android.yml` commented-out status.
 
@@ -55,7 +53,7 @@ This must finish green before any `git commit` and before any `git push`. If a t
 ./gradlew detekt
 ```
 
-The `-PuseKsp=true` property in `sample/build.gradle` toggles KSP vs. KAPT. KAPT is the current default; removal is tracked in issue #5 (Phase 1.1). Until that lands, prefer the KSP path for new work.
+The `-PuseKsp=true` property in `sample/build.gradle.kts` toggles KSP vs. KAPT. KAPT is the current default; removal is tracked in issue #5 (Phase 1.1). Until that lands, prefer the KSP path for new work.
 
 ## Architecture
 
@@ -82,10 +80,12 @@ This classpath-scanning step is the central design constraint when planning the 
 ## Build configuration
 
 - **AGP 8.9.1, Kotlin 2.1.20, KSP 2.1.20-2.0.0, Compose 1.6.7, Gradle 8.14.2.** All bumps tracked in issue #6 (Phase 1.2).
-- **No version catalog yet** — versions live as `ext.versions` / `ext.deps` Groovy maps in root `build.gradle`. Version-catalog migration is the current in-flight work (issue #2, Phase 1.0a).
-- **Groovy DSL throughout** — Kotlin DSL conversion is issue #3 (Phase 1.0b), planned to follow the catalog migration.
+- **Version catalog** at `gradle/libs.versions.toml` is the single source of truth for dependency coordinates, versions, and plugin IDs.
+- **Kotlin DSL throughout** — every build script is `.gradle.kts`. There is no `detekt/detekt.gradle.kts`; detekt config lives in the root `build.gradle.kts` `allprojects {}` block (script-plugin `apply(from = ...)` files run with their own compilation classpath and can't see plugin extension types, so we fold detekt config inline).
+- **Plugin application pattern**: plugins on the buildscript classpath (AGP, Kotlin, shot, vanniktech maven-publish) are applied in modules via plain `id("...")` (no version). Plugins resolved through `pluginManagement` repositories (ksp, compose-compiler, paparazzi, detekt) are applied via `alias(libs.plugins.*)`. Mixing `alias()` with a plugin already on the buildscript classpath produces "plugin already on classpath with unknown version" errors.
+- **`pluginManagement` repositories** in `settings.gradle.kts` include `gradlePluginPortal()`, `google()`, and `mavenCentral()` — paparazzi's transitive deps (e.g. `com.android.tools:sdk-common`) only resolve from Google Maven.
 - **Maven group is still `com.airbnb.android`** (legacy). Rename to the fork's namespace is issue #4 (Phase 1.0c).
-- **Detekt** is wired across all subprojects via `detekt/detekt.gradle`. `detekt-formatting` is applied as the ktlint integration. `./gradlew check` covers it.
+- **Detekt** is applied to every subproject via the root `allprojects {}` block. `detekt-formatting` is wired as the ktlint integration. `./gradlew check` covers it.
 
 ## CI
 

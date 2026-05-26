@@ -1,0 +1,104 @@
+plugins {
+    id("com.android.library")
+    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.compose.compiler)
+}
+
+android {
+    namespace = "com.airbnb.android.showkase_processor_testing"
+    // Added to avoid this error -
+    // Execution failed for task ':showkase-processor-testing:mergeDebugAndroidTestJavaResource'.
+    // > A failure occurred while executing com.android.build.gradle.internal.tasks.Workers$ActionFacade
+    // > More than one file was found with OS independent path 'META-INF/gradle/incremental.annotation.processors'
+    packagingOptions {
+        resources.excludes += "META-INF/gradle/incremental.annotation.processors"
+        resources.excludes += "META-INF/*.kotlin_module"
+        // Added to avoid this error -
+        // Execution failed for task ':app:mergeDebugAndroidTestJavaResource'.
+        // > A failure occurred while executing com.android.build.gradle.internal.tasks.MergeJavaResWorkAction
+        // > 2 files found with path 'META-INF/AL2.0' from inputs:
+        resources.excludes += "META-INF/AL2.0"
+        resources.excludes += "META-INF/LGPL2.1"
+    }
+    defaultConfig {
+        minSdk = 26
+        compileSdk = 36
+        targetSdk = 33
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        // The following argument makes the Android Test Orchestrator run its
+        // "pm clear" command after each test invocation. This command ensures
+        // that the app's state is completely cleared between tests.
+        testInstrumentationRunnerArguments["clearPackageData"] = "true"
+    }
+    buildFeatures {
+        compose = true
+    }
+    configurations {
+        all {
+            // work around this error:
+            // Duplicate class org.intellij.lang.annotations.Identifier found in modules annotations-12.0 (com.intellij:annotations:12.0) and annotations-13.0 (org.jetbrains:annotations:13.0)
+            exclude(group = "com.intellij", module = "annotations")
+        }
+    }
+}
+
+kotlin {
+    jvmToolchain(17)
+}
+
+dependencies {
+    // Allows this module to access the annotation processor related classes. Otherwise those are
+    // only available in java library modules. Inspiration -
+    // https://github.com/airbnb/epoxy/blob/master/epoxy-processortest/build.gradle
+    testImplementation(files("libs/rt.jar"))
+
+    // Support Libraries
+    implementation(libs.androidx.appcompat)
+
+    // Showkase
+    implementation(project(":showkase"))
+    implementation(project(":showkase-processor"))
+    implementation(project(":showkase-screenshot-testing"))
+
+    // KSP
+    implementation(libs.ksp.api)
+
+    // Compose
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.compose.runtime)
+    implementation(libs.compose.ui)
+    implementation(libs.compose.foundation)
+    implementation(libs.compose.ui.tooling)
+
+    // Material
+    implementation(libs.material)
+    implementation(libs.material.compose.theme.adapter)
+
+    // Testing
+    testImplementation(libs.assertj)
+    testImplementation(libs.google.truth)
+    testImplementation(libs.junit)
+    testImplementation(libs.kotlin.compile.testing)
+    testImplementation(libs.kotlin.compile.testing.ksp)
+    testImplementation(project(":showkase-screenshot-testing-paparazzi"))
+    testImplementation(libs.paparazzi)
+}
+
+// Needed for Java17 otherwise these tests failed to run locally.
+// More info - https://youtrack.jetbrains.com/issue/KT-45545/Kapt-is-not-compatible-with-JDK-16
+tasks.withType<Test>().configureEach {
+    if (JavaVersion.current() >= JavaVersion.VERSION_16) {
+        jvmArgs(
+            "--add-opens=jdk.compiler/com.sun.tools.javac.api=ALL-UNNAMED",
+            "--add-opens=jdk.compiler/com.sun.tools.javac.code=ALL-UNNAMED",
+            "--add-opens=jdk.compiler/com.sun.tools.javac.comp=ALL-UNNAMED",
+            "--add-opens=jdk.compiler/com.sun.tools.javac.file=ALL-UNNAMED",
+            "--add-opens=jdk.compiler/com.sun.tools.javac.jvm=ALL-UNNAMED",
+            "--add-opens=jdk.compiler/com.sun.tools.javac.main=ALL-UNNAMED",
+            "--add-opens=jdk.compiler/com.sun.tools.javac.parser=ALL-UNNAMED",
+            "--add-opens=jdk.compiler/com.sun.tools.javac.processing=ALL-UNNAMED",
+            "--add-opens=jdk.compiler/com.sun.tools.javac.tree=ALL-UNNAMED",
+            "--add-opens=jdk.compiler/com.sun.tools.javac.util=ALL-UNNAMED",
+        )
+    }
+}
