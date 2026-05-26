@@ -10,6 +10,10 @@ This is a personal fork of Airbnb's [Showkase](https://github.com/airbnb/Showkas
 
 **Commit policy** (from global rules): never add `Co-Authored-By` trailers or Claude/Anthropic attribution.
 
+## Log key decisions
+
+[docs/KeyDecisions.md](docs/KeyDecisions.md) is the running record of decisions that materially shape kronicle's path to a Compose-Multiplatform release — what we ship, what we drop, what platforms we target, what we depend on. Add an entry when a decision changes the direction or scope of the KMP transition. **Skip** mechanical refactors, quality-of-life improvements (version catalog, KTS conversion, etc.), routine version bumps, CI/workflow tweaks, and anything trivially derivable from `git log`. The doc travels with the code; treat it as part of the deliverable, not optional commentary.
+
 ## Keep this file in sync
 
 At the end of every session, update CLAUDE.md to match the current state of the repo. If a phase landed, drop references to the old state and update the "Build configuration" pins and architectural notes. Examples:
@@ -99,3 +103,4 @@ This classpath-scanning step is the central design constraint when planning the 
 - Close issues via `Closes #<n>` in the PR body.
 - The PR body should match the template; surface anything that drifted from the issue scope under "Out-of-scope follow-ups" instead of expanding the PR.
 - When an issue body specifies dependency versions, treat them as "verify at PR time against current releases" — the plan was written ahead of execution and version landscape may have shifted.
+- **Do not enable auto-merge** (`gh pr merge --auto`) on PRs by default. The user reviews PRs manually and enables auto-merge themselves when ready. Only invoke `gh pr merge --auto` when the user explicitly asks for it on a specific PR.
