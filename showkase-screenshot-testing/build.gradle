@@ -45,17 +45,17 @@ kotlin {
 dependencies {
     // Showkase
     api project(':showkase')
-    api deps.compose.uiTest
-    implementation deps.compose.core
-    implementation deps.compose.foundation
+    api libs.compose.ui.test.junit4
+    implementation libs.compose.ui
+    implementation libs.compose.foundation
 
     // Testing
-    testImplementation deps.test.assertJ
-    testImplementation deps.test.googleTruth
-    api deps.test.junit
-    api deps.test.androidXTestCore
-    api deps.test.androidXTestRules
-    api deps.test.androidxTestRunner
+    testImplementation libs.assertj
+    testImplementation libs.google.truth
+    api libs.junit
+    api libs.androidx.test.core
+    api libs.androidx.test.rules
+    api libs.androidx.test.runner
 }
 
 mavenPublishing {

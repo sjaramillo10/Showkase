@@ -75,14 +75,14 @@ kotlin {
 dependencies {
     // Showkase
     api project(':showkase')
-    api deps.compose.foundation
-    api deps.compose.activityCompose
-    compileOnly deps.test.paparazzi
+    api libs.compose.foundation
+    api libs.androidx.activity.compose
+    compileOnly libs.paparazzi
 
     // Testing
-    api deps.test.testParameterInjector
-    api deps.test.androidXTestRules
-    api deps.test.androidxTestRunner
+    api libs.test.parameter.injector
+    api libs.androidx.test.rules
+    api libs.androidx.test.runner
 }
 
 mavenPublishing {

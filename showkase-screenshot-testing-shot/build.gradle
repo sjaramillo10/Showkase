@@ -52,14 +52,14 @@ kotlin {
 dependencies {
     // Showkase
     api project(':showkase')
-    api deps.compose.uiTest
+    api libs.compose.ui.test.junit4
     api project(':showkase-screenshot-testing')
-    api deps.test.shotAndroid
+    api libs.shot.android
 
     // Testing
-    api deps.test.androidXTestCore
-    api deps.test.androidXTestRules
-    api deps.test.androidxTestRunner
+    api libs.androidx.test.core
+    api libs.androidx.test.rules
+    api libs.androidx.test.runner
 }
 
 mavenPublishing {

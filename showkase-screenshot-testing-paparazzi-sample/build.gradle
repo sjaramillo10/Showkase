@@ -136,24 +136,24 @@ dependencies {
     api project(':showkase-screenshot-testing')
 
     // Compose
-    implementation deps.compose.activityCompose
-    implementation deps.compose.composeRuntime
-    implementation deps.compose.constraintLayout
-    implementation deps.compose.core
-    implementation deps.compose.foundation
-    implementation deps.compose.tooling
-    implementation deps.compose.layout
-    implementation deps.compose.material
-    implementation deps.compose.savedInstanceState
-    implementation deps.compose.uiLiveData
+    implementation libs.androidx.activity.compose
+    implementation libs.compose.runtime
+    implementation libs.constraintlayout.compose
+    implementation libs.compose.ui
+    implementation libs.compose.foundation
+    implementation libs.compose.ui.tooling
+    implementation libs.compose.foundation.layout
+    implementation libs.compose.material
+    implementation libs.compose.runtime.saveable
+    implementation libs.compose.runtime.livedata
 
     // Image loading
-    implementation deps.imageLoading.picasso
+    implementation libs.picasso
 
     // Testing
-    testImplementation deps.test.junit
-    testImplementation deps.test.junitImplementation
-    implementation deps.test.testParameterInjector
-    testImplementation deps.compose.uiTest
+    testImplementation libs.junit
+    testImplementation libs.androidx.test.ext.junit
+    implementation libs.test.parameter.injector
+    testImplementation libs.compose.ui.test.junit4
     testImplementation project(':showkase-screenshot-testing-paparazzi')
 }

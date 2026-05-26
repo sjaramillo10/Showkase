@@ -52,18 +52,18 @@ dependencies {
     api project(':showkase-annotation')
 
     // Support Libraries
-    implementation deps.support.appCompat
-    implementation deps.support.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.core.ktx
 
     // Compose
-    implementation deps.compose.activityCompose
-    implementation deps.compose.composeRuntime
-    implementation deps.compose.composeNavigation
-    implementation deps.compose.core
-    implementation deps.compose.foundation
-    implementation deps.compose.tooling
-    implementation deps.compose.layout
-    implementation deps.compose.material
+    implementation libs.androidx.activity.compose
+    implementation libs.compose.runtime
+    implementation libs.androidx.navigation.compose
+    implementation libs.compose.ui
+    implementation libs.compose.foundation
+    implementation libs.compose.ui.tooling
+    implementation libs.compose.foundation.layout
+    implementation libs.compose.material
 }
 
 mavenPublishing {
